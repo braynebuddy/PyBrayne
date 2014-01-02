@@ -57,7 +57,7 @@ __date__      = "2013.12.01"
 # 1.0.0     2013.12.01  Starting script template
 #
 
-import sys, os, traceback, optparse
+import sys, os, traceback, argparse
 import time
 import re
 #from pexpect import run, spawn
@@ -77,20 +77,22 @@ def main ():
 if __name__ == '__main__':
     try:
         start_time = time.time()
-        parser = optparse.OptionParser(formatter=optparse.TitledHelpFormatter(), usage=globals()['__doc__'], version="%prog "+__version__)
-        parser.add_option ('-v', '--verbose', action='store_true', default=False, help='verbose output')
-        parser.add_option ('-t', '--test', default=False, help='Run test suite')
-        (options, args) = parser.parse_args()
+        #parser = argparse.ArgumentParser(description="This is the program description",  usage=globals()['__doc__'])
+        parser = argparse.ArgumentParser(description='This is the program description')
+        parser.add_argument('--version', action='version', version='%(prog)s v'+__version__)
+        parser.add_argument ('-v', '--verbose', action='store_true', help='produce verbose output')
+        parser.add_argument ('-t', '--test', action='store_true', help='run test suite')
+        args = parser.parse_args()
         #if len(args) < 1:
         #    parser.error ('missing argument')
-        if options.verbose: print time.asctime()
-        if options.test: 
+        if args.verbose: print time.asctime()
+        if args.test: 
             test()
         else:
             main()
-        if options.verbose: print time.asctime()
-        if options.verbose: print 'TOTAL TIME IN MINUTES:',
-        if options.verbose: print (time.time() - start_time) / 60.0
+        if args.verbose: print time.asctime()
+        if args.verbose: print 'TOTAL TIME IN MINUTES:',
+        if args.verbose: print (time.time() - start_time) / 60.0
         sys.exit(0)
     except KeyboardInterrupt, e: # Ctrl-C
         raise e
@@ -101,4 +103,3 @@ if __name__ == '__main__':
         print str(e)
         traceback.print_exc()
         os._exit(1)
-

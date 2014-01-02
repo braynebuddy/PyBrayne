@@ -78,10 +78,11 @@ def connect_to_twitter():
     return(iTwitter.iTwitter(key1, key2, creds, myname))
 
 # Open a connection to the main brain server
-def connect_to_brain()
-    return
+def connect_to_brain():
+    return()
 
-def connect_to_memory()
+def connect_to_memory():
+    return()
     
 # The main test routine
 def test ():
@@ -109,12 +110,7 @@ def main ():
     global options, args
     if options.verbose: print 'Connecting to Twitter...'
 
-    key1 = "yujC3tyTWH6q7XAgIvAGg"
-    key2 = "FqVBCDdF4B3cA7dPKBFxwZmq2jD9hAq1dub7eRBHaY"
-    creds = os.path.expanduser('~/.brayne_twitter_credentials')
-    myname = "Brayne Buddy"
-
-    t = iTwitter.iTwitter(key1, key2, creds, myname)
+    t = connect_to_twitter()
 
     if options.verbose: print 'Getting most recent mention...'
     resp = t.get_mentions(num=1)
