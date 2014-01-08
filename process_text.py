@@ -72,7 +72,7 @@ wolfram_appname = 'brainbuddy'
 wolfram_appid = 'E2W845-J3UWUE2UK9'
 
 def connect_wit():
-    creds = os.path.expanduser('~/.brayne_wit_credentials')
+    creds = os.path.expanduser('~/.wit_credentials')
     return witAI.witAI(creds)
     
 def show_processed(ans):

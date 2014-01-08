@@ -73,7 +73,7 @@ import iTwitter
 def connect_to_twitter():
     key1 = "yujC3tyTWH6q7XAgIvAGg"
     key2 = "FqVBCDdF4B3cA7dPKBFxwZmq2jD9hAq1dub7eRBHaY"
-    creds = os.path.expanduser('~/.brayne_twitter_credentials')
+    creds = os.path.expanduser('~/.twitter_credentials')
     myname = "Buddy Brayne"
     return(iTwitter.iTwitter(key1, key2, creds, myname))
 
