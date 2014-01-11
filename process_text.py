@@ -68,9 +68,6 @@ import re
 
 import witAI
 
-wolfram_appname = 'brainbuddy'
-wolfram_appid = 'E2W845-J3UWUE2UK9'
-
 def connect_wit():
     creds = os.path.expanduser('~/.wit_credentials')
     return witAI.witAI(creds)
