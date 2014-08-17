@@ -17,14 +17,6 @@ DESCRIPTION
     language sentences (text) and get structured information (JSON) 
     in return.
 
-EXAMPLES
-
-    TODO: Show some examples of how to use this script.
-
-EXIT STATUS
-
-    TODO: List exit codes
-
 AUTHOR
 
     Rob Hawkins <webwords@txhawkins.net>
@@ -88,11 +80,10 @@ class witAI (object):
         return json.load(res)
 
 def test ():
-
     global args
     print 'Input string:', args.text_in
     print
-    w = witAI(os.path.expanduser('~/.brayne_wit_credentials'))
+    w = witAI(os.path.expanduser('~/.wit_credentials'))
     if not w:
         print 'Failed to connect to api.wit.ai'
         return
@@ -118,8 +109,28 @@ def test ():
 def main ():
 
     global args
-    # TODO: Do something more interesting here...
     print 'Hello world!'
+
+    print 'Input string:', args.text_in
+    w = witAI(os.path.expanduser('~/.wit_credentials'))
+    if not w:
+        print 'Failed to connect to api.wit.ai'
+        return
+
+    ans = w.get_parse(args.text_in)
+    if 'outcome' in ans:
+        if 'intent' in ans['outcome']:
+            print 'Intent:', ans['outcome']['intent'], \
+                        '(', ans['outcome']['confidence'], ')'
+        if 'entities' in ans['outcome']:
+            for ent in ans['outcome']['entities']:
+                print 'Entity:', ent
+                if isinstance(ans['outcome']['entities'][ent]['value'], dict):
+                    for v in ans['outcome']['entities'][ent]['value']:
+                        print 'Value',v,'=', \
+                            ans['outcome']['entities'][ent]['value'][v]
+                else:
+                    print 'Value =', ans['outcome']['entities'][ent]['value']
 
 
 if __name__ == '__main__':

@@ -75,29 +75,76 @@ def connect_wit():
 def show_processed(ans):
     if not isinstance(ans, dict):
         return
-    if 'outcome' in ans:
-        if 'intent' in ans['outcome']:
-            print 'Intent:', ans['outcome']['intent'], \
-                        '(', ans['outcome']['confidence'], ')'
-        if 'entities' in ans['outcome']:
-            for ent in ans['outcome']['entities']:
-                print 'Entity:', ent
-                if isinstance(ans['outcome']['entities'][ent]['value'], dict):
-                    for v in ans['outcome']['entities'][ent]['value']:
-                        print 'Value',v,'=', \
-                            ans['outcome']['entities'][ent]['value'][v]
-                else:
-                    print 'Value =', ans['outcome']['entities'][ent]['value']
-    
+
+    if 'outcomes' in ans:
+        for item in ans['outcomes']:
+            if 'intent' in item:
+                print 'Intent:', item['intent'], '(', item['confidence'], ')'
+            if 'entities' in item:
+                for ent in item['entities']:
+                    print 'Entity:', ent
+                    for val in item['entities'][ent]:
+                        if isinstance(val, dict):
+                            for v in val:
+                                print '  ', v, '=', val[v]
+                        else:
+                            print '  Value =', val
+
+                    #if isinstance(item['entities'][ent]['value'], dict):
+                    #    for v in item['entities'][ent]['value']:
+                    #        print v,'=', item['entities'][ent]['value'][v]
+                    #else:
+                    #    print 'Value =', item['entities'][ent]['value']
+
+    else:
+        print 'No outcomes found.'
+        for k in ans:
+            print 'Key: ', k
+            print 'Contents: ', ans[k]
+
+def show_all_processed(ans):
+    if not isinstance(ans, dict):
+        return
+
+    if 'outcomes' in ans:
+        for item in ans['outcomes']:
+            #for 
+            if 'intent' in item:
+                print 'Intent:', item['intent'], '(', item['confidence'], ')'
+            if 'entities' in item:
+                for ent in item['entities']:
+                    print 'Entity:', ent
+                    if isinstance(ent, dict):
+                        for v in [ent]:
+                            print v,'=', ent[v]
+                    else:
+                        print 'Value =', ent['value']
+
+    else:
+        print 'No outcomes found.'
+        for k in ans:
+            print 'Key: ', k
+            print 'Contents: ', ans[k]
+
 def test ():
+    import pprint
     global args
     print 'Hello from the test() function!'
     print 'Here is the text you sent me:', args.text_in
+    print
+    if args.verbose: print 'Connecting to WitAI...'
+    w = connect_wit()
+    if args.verbose: print w
+    if args.verbose: print
+    if args.verbose: print 'Processing the text...'
+    a = w.get_parse(args.text_in)
+    print 'Raw parse = '
+    pprint.pprint(a)
+    print
+    show_processed(a)
 
 def main ():
-
     global args
-
     w = connect_wit()
     show_processed(w.get_parse(args.text_in))
 
