@@ -8,7 +8,7 @@
 #
 """
 SYNOPSIS
-    WordNet [-h,--help] [-v,--verbose] [--version]
+    WordNet
 
 DESCRIPTION
     WordNet.py contains functions that are intended to be used from other
