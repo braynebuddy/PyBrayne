@@ -171,6 +171,19 @@ def hyperpaths(ss):    # Look up a synset's hypernym paths
             res.append(s)
     return res
 
+def isa(word1, word2):
+    res = False
+    pword = wordinfo(word1)
+    if len(pword) > 0:
+        for w in pwords:
+            if w[1] == 'n':
+                htree = [w[2], ]
+                hypers = hypernyms(w[2], w[1], htree)
+                if len(hypers) > 0:
+                    for h in hypers:
+                        if h == word2: res = True
+    return res
+
 if __name__ == '__main__':
     from nltk.corpus import wordnet as wn
     wnPOS = [wn.NOUN, wn.VERB, wn.ADJ, wn.ADV]

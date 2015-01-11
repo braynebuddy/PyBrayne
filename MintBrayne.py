@@ -16,15 +16,17 @@ def helloworld(bot, trigger):
     """
     bot.say('Hello, world!')
 
-@willie.module.rule(r'(\D?$nickname[,:])(.*)')
-@willie.module.example('MintBrayne, Anything at all')
+#@willie.module.rule(r'(\D?$nickname[,:])(.*)')
+@willie.module.commands('nltk')
+@willie.module.nickname_commands('nltk')
+@willie.module.example('MintBrayne, nltk Anything at all')
 def respond(bot, trigger):
-    #bot.reply('You said,"%s". Let me think...' % trigger.group(2))
+    bot.reply('You said,"%s". Let me think...' % trigger.group(3))
 
     from nltk.corpus import wordnet as wn
     wnPOS = [wn.NOUN, wn.VERB, wn.ADJ, wn.ADV]
 
-    words = nltk.wordpunct_tokenize(trigger.group(2))
+    words = nltk.wordpunct_tokenize(trigger.group(3))
 
     for w1 in words:
         parsed_words = WordNet.wordinfo(w1)
